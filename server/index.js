@@ -47,12 +47,12 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 // Database connection
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/ecocommerce')
   .then(() => {
-    console.log('✅ Connected to MongoDB');
+    console.log('Connected to MongoDB');
     // Seed database with initial data
     seedDatabase();
   })
   .catch((error) => {
-    console.error('❌ MongoDB connection error:', error);
+    console.error('MongoDB connection error:', error);
     process.exit(1);
   });
 
@@ -81,12 +81,12 @@ app.get('/api/health', (req, res) => {
 
 // Background clustering job - runs every 10 minutes
 cron.schedule('*/10 * * * *', async () => {
-  console.log('🔄 Running background clustering job...');
+  console.log('Running background clustering job...');
   try {
     await groupDeliveryService.performClustering();
-    console.log('✅ Clustering completed successfully');
+    console.log('Clustering completed successfully');
   } catch (error) {
-    console.error('❌ Clustering job failed:', error);
+    console.error('Clustering job failed:', error);
   }
 });
 
@@ -105,10 +105,10 @@ app.use('*', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`📊 Group delivery clustering active`);
-  console.log(`🔍 AI search engine ready`);
-  console.log(`🌱 EcoCommerce backend initialized`);
+  console.log(`Server running on port ${PORT}`);
+  console.log(`Group delivery clustering active`);
+  console.log(`AI search engine ready`);
+  console.log(`EcoCommerce backend initialized`);
 });
 
 export { groupDeliveryService };

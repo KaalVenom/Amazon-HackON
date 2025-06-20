@@ -68,7 +68,7 @@ const createDemoProducts = () => [
 export const seedDatabase = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI);
-    console.log('✅ Connected to MongoDB');
+    console.log('Connected to MongoDB');
 
     const existingUsers = await User.countDocuments();
     if (existingUsers === 0) {
@@ -79,17 +79,17 @@ export const seedDatabase = async () => {
         password: 'SecurePass123!',
         role: 'seller'
       });
-      console.log('👤 Demo seller created');
+      console.log('Demo seller created');
     }
 
     const existingProducts = await Product.countDocuments();
     if (existingProducts === 0) {
       const products = createDemoProducts();
       await Product.insertMany(products);
-      console.log('🛍️ Demo products inserted');
+      console.log('Demo products inserted');
     }
   } catch (error) {
-    console.error('❌ Database seeding failed:', error);
+    console.error('Database seeding failed:', error);
   } finally {
     await mongoose.disconnect();
   }
