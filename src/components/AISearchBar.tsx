@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Search, TrendingUp, Sparkles } from 'lucide-react';
-import { SearchAPI } from '../services/SearchAPI';
-import { useAppContext } from '../context/AppContext';
+import React, { useState, useEffect, useRef } from "react";
+import { Search, TrendingUp, Sparkles } from "lucide-react";
+import { SearchAPI } from "../services/SearchAPI";
+import { useAppContext } from "../context/AppContext";
 
 interface SearchSuggestion {
   text: string;
@@ -15,7 +15,11 @@ interface AISearchBarProps {
   showSuggestions?: boolean;
 }
 
-export function AISearchBar({ onSearch, placeholder = "Search with AI...", showSuggestions = true }: AISearchBarProps) {
+export function AISearchBar({
+  onSearch,
+  placeholder = "Search with AI...",
+  showSuggestions = true,
+}: AISearchBarProps) {
   const { state, dispatch } = useAppContext();
   const [suggestions, setSuggestions] = useState<SearchSuggestion[]>([]);
   const [trending, setTrending] = useState<string[]>([]);
@@ -26,7 +30,7 @@ export function AISearchBar({ onSearch, placeholder = "Search with AI...", showS
 
   useEffect(() => {
     // Load trending searches on mount
-    SearchAPI.getTrendingSearches().then(data => {
+    SearchAPI.getTrendingSearches().then((data) => {
       setTrending(data.trending || []);
     });
   }, []);
@@ -40,7 +44,7 @@ export function AISearchBar({ onSearch, placeholder = "Search with AI...", showS
           const data = await SearchAPI.getSearchSuggestions(state.searchQuery);
           setSuggestions(data.suggestions || []);
         } catch (error) {
-          console.error('Error getting suggestions:', error);
+          console.error("Error getting suggestions:", error);
         } finally {
           setIsLoading(false);
         }
@@ -55,18 +59,21 @@ export function AISearchBar({ onSearch, placeholder = "Search with AI...", showS
   useEffect(() => {
     // Close dropdown when clicking outside
     function handleClickOutside(event: MouseEvent) {
-      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+      if (
+        searchRef.current &&
+        !searchRef.current.contains(event.target as Node)
+      ) {
         setShowDropdown(false);
       }
     }
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    dispatch({ type: 'SET_SEARCH_QUERY', payload: value });
+    dispatch({ type: "SET_SEARCH_QUERY", payload: value });
     setShowDropdown(value.length > 0);
   };
 
@@ -80,19 +87,19 @@ export function AISearchBar({ onSearch, placeholder = "Search with AI...", showS
   };
 
   const handleSuggestionClick = (suggestion: SearchSuggestion) => {
-    dispatch({ type: 'SET_SEARCH_QUERY', payload: suggestion.text });
+    dispatch({ type: "SET_SEARCH_QUERY", payload: suggestion.text });
     handleSearch(suggestion.text);
   };
 
   const handleTrendingClick = (trend: string) => {
-    dispatch({ type: 'SET_SEARCH_QUERY', payload: trend });
+    dispatch({ type: "SET_SEARCH_QUERY", payload: trend });
     handleSearch(trend);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleSearch();
-    } else if (e.key === 'Escape') {
+    } else if (e.key === "Escape") {
       setShowDropdown(false);
     }
   };
@@ -114,7 +121,7 @@ export function AISearchBar({ onSearch, placeholder = "Search with AI...", showS
           <option>Health & Personal Care</option>
           <option>Beauty</option>
         </select>
-        
+
         <div className="relative flex-1">
           <input
             ref={inputRef}
@@ -124,16 +131,17 @@ export function AISearchBar({ onSearch, placeholder = "Search with AI...", showS
             onKeyDown={handleKeyDown}
             onFocus={handleFocus}
             placeholder={placeholder}
-            className="w-full px-4 py-2 text-gray-900 focus:outline-none"
+            className="w-full px-4 py-2 text-black focus:outline-none"
+            style={{ color: "black" }}
           />
-          
+
           {/* AI Indicator */}
           <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center space-x-1">
             <Sparkles className="w-4 h-4 text-blue-500" />
             <span className="text-xs text-blue-500 font-medium">AI</span>
           </div>
         </div>
-        
+
         <button
           onClick={() => handleSearch()}
           className="bg-orange-400 hover:bg-orange-500 px-4 py-2 rounded-r-md transition-colors"
@@ -144,7 +152,7 @@ export function AISearchBar({ onSearch, placeholder = "Search with AI...", showS
 
       {/* Dropdown with suggestions and trending */}
       {showDropdown && (
-        <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-b-lg shadow-lg z-50 max-h-96 overflow-y-auto">
+        <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-b-lg shadow-lg z-50 max-h-96 overflow-y-auto text-black">
           {/* Search Suggestions */}
           {suggestions.length > 0 && (
             <div className="p-2">
@@ -156,11 +164,11 @@ export function AISearchBar({ onSearch, placeholder = "Search with AI...", showS
                 <button
                   key={index}
                   onClick={() => handleSuggestionClick(suggestion)}
-                  className="w-full text-left px-3 py-2 hover:bg-gray-100 rounded flex items-center justify-between group"
+                  className="w-full text-left px-3 py-2 hover:bg-gray-100 rounded flex items-center justify-between group text-black"
                 >
                   <div className="flex items-center space-x-2">
                     <Search className="w-4 h-4 text-gray-400" />
-                    <span>{suggestion.text}</span>
+                    <span className="text-black">{suggestion.text}</span>
                   </div>
                   <div className="flex items-center space-x-2">
                     {suggestion.isEcoFriendly && (
@@ -168,7 +176,9 @@ export function AISearchBar({ onSearch, placeholder = "Search with AI...", showS
                         Eco
                       </span>
                     )}
-                    <span className="text-xs text-gray-500">{suggestion.category}</span>
+                    <span className="text-xs text-gray-500">
+                      {suggestion.category}
+                    </span>
                   </div>
                 </button>
               ))}
@@ -180,7 +190,9 @@ export function AISearchBar({ onSearch, placeholder = "Search with AI...", showS
             <div className="p-4 text-center">
               <div className="inline-flex items-center space-x-2">
                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500"></div>
-                <span className="text-sm text-gray-600">Getting AI suggestions...</span>
+                <span className="text-sm text-gray-600">
+                  Getting AI suggestions...
+                </span>
               </div>
             </div>
           )}
@@ -196,21 +208,23 @@ export function AISearchBar({ onSearch, placeholder = "Search with AI...", showS
                 <button
                   key={index}
                   onClick={() => handleTrendingClick(trend)}
-                  className="w-full text-left px-3 py-2 hover:bg-gray-100 rounded flex items-center space-x-2"
+                  className="w-full text-left px-3 py-2 hover:bg-gray-100 rounded flex items-center space-x-2 text-black"
                 >
                   <TrendingUp className="w-4 h-4 text-orange-500" />
-                  <span>{trend}</span>
+                  <span className="text-black">{trend}</span>
                 </button>
               ))}
             </div>
           )}
 
           {/* No results */}
-          {state.searchQuery.length >= 2 && suggestions.length === 0 && !isLoading && (
-            <div className="p-4 text-center text-gray-500">
-              <span className="text-sm">No suggestions found</span>
-            </div>
-          )}
+          {state.searchQuery.length >= 2 &&
+            suggestions.length === 0 &&
+            !isLoading && (
+              <div className="p-4 text-center text-gray-600">
+                <span className="text-sm">No suggestions found</span>
+              </div>
+            )}
         </div>
       )}
     </div>
