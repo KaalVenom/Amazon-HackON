@@ -73,7 +73,7 @@ export function Header() {
             className="flex items-center space-x-2 text-white hover:text-orange-400 transition-colors"
           >
             <div className="bg-orange-500 px-2 py-1 rounded text-black font-bold text-xl">
-              Eco
+              Amazon
             </div>
             <span className="text-xl font-bold">.in</span>
           </Link>
@@ -194,17 +194,18 @@ export function Header() {
               Health Care
             </Link>
             <Link
-              to="/greenstore"
-              className="text-green-400 hover:text-green-300 transition-colors font-medium flex items-center"
-            >
-              <FaLeaf className="mr-1 w-4 h-4" /> Green Store
-            </Link>
-            <Link
-              to="/seller"
-              className="text-blue-400 hover:text-blue-300 transition-colors font-medium flex items-center"
-            >
-              <FaBoxOpen className="mr-1 w-4 h-4" /> Sell
-            </Link>
+  to="/greenstore"
+  className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded inline-flex items-center transition"
+>
+  <FaLeaf className="mr-2 w-4 h-4" /> Green Store
+</Link>
+
+<Link
+  to="/seller"
+  className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded inline-flex items-center transition"
+>
+  <FaBoxOpen className="mr-2 w-4 h-4" /> Sell
+</Link>
           </div>
         </div>
       </div>

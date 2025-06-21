@@ -32,11 +32,11 @@ export function ProductCard({ product }: ProductCardProps) {
               <span>Eco Choice</span>
             </div>
           )}
-          {product.originalPrice && (
-            <div className="absolute top-2 right-2 bg-red-600 text-white px-2 py-1 rounded text-xs font-semibold">
-              {Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}% off
-            </div>
-          )}
+          {/* {product.originalPrice && (
+            // <div className="absolute top-2 right-2 bg-red-600 text-white px-2 py-1 rounded text-xs font-semibold">
+            //   {Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}% off
+            // </div>
+          )} */}
         </div>
 
         {/* Product Info */}
